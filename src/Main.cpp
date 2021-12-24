@@ -55,12 +55,13 @@ reset: //reset label to reset the game
 	sound3.setBuffer(buffer3);
 	sound3.setVolume(50); //set volume low cause it was too loud
 	sound4.setBuffer(buffer4);
+	sound4.setVolume(30); //set volume low cause it was too loud
 	sound5.setBuffer(buffer5);
 	sound6.setBuffer(buffer6);
 
 	Music bgm; //background music is set using music variable bgm
 	bgm.openFromFile("music/bgm.ogg");
-	bgm.setVolume(75); //volume is adjusted so that it doesn't become distracting
+	bgm.setVolume(20); //volume is adjusted so that it doesn't become distracting
 	bgm.setLoop(true); //bgm is looped once it reaches its end
 
 	int n = 0;					 //variable to track number of blocks initialised
@@ -142,16 +143,16 @@ reset: //reset label to reset the game
 	float dx = 0, dy = 2;	//ball position increment
 	float x = 254, y = 300; //ball position
 
+	bgm.play(); //play bgm
+
 	while (app.isOpen()) //loop till the app is closed. Note that a window is miinimized but isOpen() will still return true
 	{
 		Event e;				 //Event is a class and e its object. e is basically storing events like a key press in a queue
 		while (app.pollEvent(e)) //pollEvent pops the recent event in the queue. Must be called in loop as there may be multiple events at once.
 		{
 			if (e.type == Event::Closed)
-				app.close(); //if event is clicking red-cross button, then app will be closed.
+				return 0; //if event is clicking red-cross button, then app will be closed.
 		}
-
-		bgm.play(); //play bgm
 
 		x += dx;
 		for (int i = 0; i < n; i++) //n is from displaying the block grid
@@ -255,6 +256,7 @@ reset: //reset label to reset the game
 
 		if (life < 1) //if lives get over, game gets over, and the score is displayed
 		{
+			bgm.stop();
 			sound5.play(); //sound of game over is played instead of sound of losing a life
 			printf("Game Over.\nYour Score: %d\n", score);
 			break; //breaks out of the while loop
@@ -262,6 +264,7 @@ reset: //reset label to reset the game
 
 		if (score == 700) //if game is won, that is, maximum score of 700 is reached, then victory song is played and score is displayed
 		{
+			bgm.stop();
 			sound6.play();
 			printf("You have won!\nYour Score: %d\n", score);
 			break; //breaks out of the while loop
