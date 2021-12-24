@@ -37,13 +37,13 @@ reset:
 	Sprite sBackground(t6), sBall(t7), sPaddle(t8); //textures are applied to these, these are game objects
 	sPaddle.setPosition(300, 440);					//set paddle position
 
-	Sprite block1[200], block2[200], block3[200], block4[200], block5[200]; //array of blocks (1000 can be ignored as array declaration needs a number)
+	Sprite block1[200], block2[200], block3[200], block4[200], block5[200]; //array of blocks (200 can be ignored as array declaration needs a number)
 
 	int n = 0;
-	for (int i = 1; i <= 10; i++)
+	for (int j = 1; j <= 2; j++)
 	{
-		for (int j = 1; j <= 2; j++)
-		{ //set the grid of blocks
+		for (int i = 1; i <= 10; i++)
+		{
 			block1[n].setTexture(t1);
 			block1[n].setPosition(i * 43, j * 20);
 			block2[n].setTexture(t2);
@@ -56,8 +56,11 @@ reset:
 			block5[n].setPosition(i * 43, j * 20);
 			n++;
 		}
-		for (int j = 3; j <= 4; j++)
-		{ //set the grid of blocks
+	}
+	for (int j = 3; j <= 4; j++)
+	{
+		for (int i = 1; i <= 10; i++)
+		{
 			block1[n].setTexture(t1);
 			block1[n].setPosition(i * 43, j * 20);
 			block2[n].setTexture(t2);
@@ -68,8 +71,11 @@ reset:
 			block4[n].setPosition(i * 43, j * 20);
 			n++;
 		}
-		for (int j = 5; j <= 6; j++)
-		{ //set the grid of blocks
+	}
+	for (int j = 5; j <= 6; j++)
+	{
+		for (int i = 1; i <= 10; i++)
+		{
 			block1[n].setTexture(t1);
 			block1[n].setPosition(i * 43, j * 20);
 			block2[n].setTexture(t2);
@@ -78,16 +84,22 @@ reset:
 			block3[n].setPosition(i * 43, j * 20);
 			n++;
 		}
-		for (int j = 7; j <= 8; j++)
-		{ //set the grid of blocks
+	}
+	for (int j = 7; j <= 8; j++)
+	{
+		for (int i = 1; i <= 10; i++)
+		{
 			block1[n].setTexture(t1);
 			block1[n].setPosition(i * 43, j * 20);
 			block2[n].setTexture(t2);
 			block2[n].setPosition(i * 43, j * 20);
 			n++;
 		}
-		for (int j = 9; j <= 10; j++)
-		{ //set the grid of blocks
+	}
+	for (int j = 9; j <= 10; j++)
+	{
+		for (int i = 1; i <= 10; i++)
+		{
 			block1[n].setTexture(t1);
 			block1[n].setPosition(i * 43, j * 20);
 			n++;
@@ -97,7 +109,7 @@ reset:
 	int life = 5;
 	int score = 0;
 
-	float dx = 6, dy = 5;	//ball position increment
+	float dx = 0, dy = 2;	//ball position increment
 	float x = 300, y = 300; //ball position
 
 	while (app.isOpen()) //loop till the app is closed. Note that a window is miinimized but isOpen() will still return true
@@ -187,7 +199,7 @@ reset:
 		{
 			life--;
 			x = 300, y = 300;
-			dx = 6, dy = 5;
+			dx = 0, dy = 2;
 		}
 
 		if (life < 1)
@@ -196,13 +208,24 @@ reset:
 			break;
 		}
 
+		int pdx = 0, bdx = dx;
 		if (Keyboard::isKeyPressed(Keyboard::Right))
-			sPaddle.move(7, 0); //to move paddle right
+		{
+			pdx = 7;
+			bdx = pdx - 1;
+		}
 		if (Keyboard::isKeyPressed(Keyboard::Left))
-			sPaddle.move(-7, 0); //to move paddle left
+		{
+			pdx = -7;
+			bdx = pdx + 1;
+		}
+		sPaddle.move(pdx, 0); //to move paddle left or right as per pdx (paddle dx)
 
 		if (FloatRect(x, y, 12, 12).intersects(sPaddle.getGlobalBounds()))
+		{
+			dx = bdx;				//ball on hitting the paddle will move in direction of the paddle
 			dy = -(rand() % 5 + 2); //if paddle intersects ball, bounce back at a random rate
+		}
 
 		sBall.setPosition(x, y); //put ball sprite at the position x and y, which was till now using a floating rectangle
 
