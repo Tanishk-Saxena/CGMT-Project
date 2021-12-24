@@ -21,7 +21,7 @@ reset:
 
 	srand(time(0));
 
-	RenderWindow app(VideoMode(520, 450), "Arkanoid!"); //creates app and within it creates video mode window
+	RenderWindow app(VideoMode(520, 470), "Arkanoid!"); //creates app and within it creates video mode window
 	app.setFramerateLimit(60);							//sets fps using sleep function of sf namespace, which is dependent on OS
 
 	Texture t1, t2, t3, t4, t5, t6, t7, t8; //images to be used, live on graphics card
@@ -35,7 +35,8 @@ reset:
 	t8.loadFromFile("images/paddle.png");
 
 	Sprite sBackground(t6), sBall(t7), sPaddle(t8); //textures are applied to these, these are game objects
-	sPaddle.setPosition(300, 440);					//set paddle position
+	sPaddle.setPosition(215, 460);					//set paddle position
+	Sprite healthbar[11];							//health bar at the top
 
 	Sprite block1[200], block2[200], block3[200], block4[200], block5[200]; //array of blocks (200 can be ignored as array declaration needs a number)
 
@@ -45,15 +46,15 @@ reset:
 		for (int i = 1; i <= 10; i++)
 		{
 			block1[n].setTexture(t1);
-			block1[n].setPosition(i * 43, j * 20);
+			block1[n].setPosition(50 + ((i - 1) * 43), 40 + ((j - 1) * 20));
 			block2[n].setTexture(t2);
-			block2[n].setPosition(i * 43, j * 20);
+			block2[n].setPosition(50 + ((i - 1) * 43), 40 + ((j - 1) * 20));
 			block3[n].setTexture(t3);
-			block3[n].setPosition(i * 43, j * 20);
+			block3[n].setPosition(50 + ((i - 1) * 43), 40 + ((j - 1) * 20));
 			block4[n].setTexture(t4);
-			block4[n].setPosition(i * 43, j * 20);
+			block4[n].setPosition(50 + ((i - 1) * 43), 40 + ((j - 1) * 20));
 			block5[n].setTexture(t5);
-			block5[n].setPosition(i * 43, j * 20);
+			block5[n].setPosition(50 + ((i - 1) * 43), 40 + ((j - 1) * 20));
 			n++;
 		}
 	}
@@ -62,13 +63,13 @@ reset:
 		for (int i = 1; i <= 10; i++)
 		{
 			block1[n].setTexture(t1);
-			block1[n].setPosition(i * 43, j * 20);
+			block1[n].setPosition(50 + ((i - 1) * 43), 40 + ((j - 1) * 20));
 			block2[n].setTexture(t2);
-			block2[n].setPosition(i * 43, j * 20);
+			block2[n].setPosition(50 + ((i - 1) * 43), 40 + ((j - 1) * 20));
 			block3[n].setTexture(t3);
-			block3[n].setPosition(i * 43, j * 20);
+			block3[n].setPosition(50 + ((i - 1) * 43), 40 + ((j - 1) * 20));
 			block4[n].setTexture(t4);
-			block4[n].setPosition(i * 43, j * 20);
+			block4[n].setPosition(50 + ((i - 1) * 43), 40 + ((j - 1) * 20));
 			n++;
 		}
 	}
@@ -77,11 +78,11 @@ reset:
 		for (int i = 1; i <= 10; i++)
 		{
 			block1[n].setTexture(t1);
-			block1[n].setPosition(i * 43, j * 20);
+			block1[n].setPosition(50 + ((i - 1) * 43), 40 + ((j - 1) * 20));
 			block2[n].setTexture(t2);
-			block2[n].setPosition(i * 43, j * 20);
+			block2[n].setPosition(50 + ((i - 1) * 43), 40 + ((j - 1) * 20));
 			block3[n].setTexture(t3);
-			block3[n].setPosition(i * 43, j * 20);
+			block3[n].setPosition(50 + ((i - 1) * 43), 40 + ((j - 1) * 20));
 			n++;
 		}
 	}
@@ -90,9 +91,9 @@ reset:
 		for (int i = 1; i <= 10; i++)
 		{
 			block1[n].setTexture(t1);
-			block1[n].setPosition(i * 43, j * 20);
+			block1[n].setPosition(50 + ((i - 1) * 43), 40 + ((j - 1) * 20));
 			block2[n].setTexture(t2);
-			block2[n].setPosition(i * 43, j * 20);
+			block2[n].setPosition(50 + ((i - 1) * 43), 40 + ((j - 1) * 20));
 			n++;
 		}
 	}
@@ -101,7 +102,7 @@ reset:
 		for (int i = 1; i <= 10; i++)
 		{
 			block1[n].setTexture(t1);
-			block1[n].setPosition(i * 43, j * 20);
+			block1[n].setPosition(50 + ((i - 1) * 43), 40 + ((j - 1) * 20));
 			n++;
 		}
 	}
@@ -109,8 +110,14 @@ reset:
 	int life = 5;
 	int score = 0;
 
+	for (int i = 0; i < life; i++)
+	{
+		healthbar[i].setTexture(t7);
+		healthbar[i].setPosition(500 - (i * 17), 10);
+	}
+
 	float dx = 0, dy = 2;	//ball position increment
-	float x = 300, y = 300; //ball position
+	float x = 254, y = 300; //ball position
 
 	while (app.isOpen()) //loop till the app is closed. Note that a window is miinimized but isOpen() will still return true
 	{
@@ -124,31 +131,31 @@ reset:
 		x += dx;
 		for (int i = 0; i < n; i++) //n is from displaying the block grid
 		{
-			if (FloatRect(x + 3, y + 3, 6, 6).intersects(block5[i].getGlobalBounds()) && i < 20) //check each block for collision
+			if (FloatRect(x - 6, y - 6, 12, 12).intersects(block5[i].getGlobalBounds()) && i < 20) //check each block for collision
 			{
 				score += 5;
 				block5[i].setPosition(-100, 0);
 				dx = -dx; //reflection
 			}
-			else if (FloatRect(x + 3, y + 3, 6, 6).intersects(block4[i].getGlobalBounds()) && i < 40) //check each block for collision
+			else if (FloatRect(x - 6, y - 6, 12, 12).intersects(block4[i].getGlobalBounds()) && i < 40) //check each block for collision
 			{
 				score += 4;
 				block4[i].setPosition(-100, 0);
 				dx = -dx; //reflection
 			}
-			else if (FloatRect(x + 3, y + 3, 6, 6).intersects(block3[i].getGlobalBounds()) && i < 60) //check each block for collision
+			else if (FloatRect(x - 6, y - 6, 12, 12).intersects(block3[i].getGlobalBounds()) && i < 60) //check each block for collision
 			{
 				score += 3;
 				block3[i].setPosition(-100, 0);
 				dx = -dx; //reflection
 			}
-			else if (FloatRect(x + 3, y + 3, 6, 6).intersects(block2[i].getGlobalBounds()) && i < 80) //check each block for collision
+			else if (FloatRect(x - 6, y - 6, 12, 12).intersects(block2[i].getGlobalBounds()) && i < 80) //check each block for collision
 			{
 				score += 2;
 				block2[i].setPosition(-100, 0);
 				dx = -dx; //reflection
 			}
-			else if (FloatRect(x + 3, y + 3, 6, 6).intersects(block1[i].getGlobalBounds()) && i < 100) //check each block for collision
+			else if (FloatRect(x - 6, y - 6, 12, 12).intersects(block1[i].getGlobalBounds()) && i < 100) //check each block for collision
 			{
 				score++;
 				block1[i].setPosition(-100, 0);
@@ -159,31 +166,31 @@ reset:
 		y += dy;
 		for (int i = 0; i < n; i++) //n is from displaying the block grid
 		{
-			if (FloatRect(x + 3, y + 3, 6, 6).intersects(block5[i].getGlobalBounds()) && i < 20) //check each block for collision
+			if (FloatRect(x - 6, y - 6, 12, 12).intersects(block5[i].getGlobalBounds()) && i < 20) //check each block for collision
 			{
 				score += 5;
 				block5[i].setPosition(-100, 0);
 				dy = -dy; //reflection
 			}
-			else if (FloatRect(x + 3, y + 3, 6, 6).intersects(block4[i].getGlobalBounds()) && i < 40) //check each block for collision
+			else if (FloatRect(x - 6, y - 6, 12, 12).intersects(block4[i].getGlobalBounds()) && i < 40) //check each block for collision
 			{
 				score += 4;
 				block4[i].setPosition(-100, 0);
 				dy = -dy; //reflection
 			}
-			else if (FloatRect(x + 3, y + 3, 6, 6).intersects(block3[i].getGlobalBounds()) && i < 60) //check each block for collision
+			else if (FloatRect(x - 6, y - 6, 12, 12).intersects(block3[i].getGlobalBounds()) && i < 60) //check each block for collision
 			{
 				score += 3;
 				block3[i].setPosition(-100, 0);
 				dy = -dy; //reflection
 			}
-			else if (FloatRect(x + 3, y + 3, 6, 6).intersects(block2[i].getGlobalBounds()) && i < 80) //check each block for collision
+			else if (FloatRect(x - 6, y - 6, 12, 12).intersects(block2[i].getGlobalBounds()) && i < 80) //check each block for collision
 			{
 				score += 2;
 				block2[i].setPosition(-100, 0);
 				dy = -dy; //reflection
 			}
-			else if (FloatRect(x + 3, y + 3, 6, 6).intersects(block1[i].getGlobalBounds()) && i < 100) //check each block for collision
+			else if (FloatRect(x - 6, y - 6, 12, 12).intersects(block1[i].getGlobalBounds()) && i < 100) //check each block for collision
 			{
 				score++;
 				block1[i].setPosition(-100, 0);
@@ -195,10 +202,10 @@ reset:
 			dx = -dx; //bouncing
 		if (y < 0)
 			dy = -dy; //bouncing
-		if (y > 450)
+		if (y > 470)
 		{
 			life--;
-			x = 300, y = 300;
+			x = 260, y = 300;
 			dx = 0, dy = 2;
 		}
 
@@ -263,6 +270,11 @@ reset:
 		for (int i = 80; i < 100; i++)
 		{
 			app.draw(block1[i]);
+		}
+
+		for (int i = 0; i < life; i++)
+		{
+			app.draw(healthbar[i]);
 		}
 
 		app.display(); //display what has been rendered for the current frame in the game window
