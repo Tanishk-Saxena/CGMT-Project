@@ -162,35 +162,35 @@ reset: //reset label to reset the game
 		x += dx;
 		for (int i = 0; i < n; i++) //n is from displaying the block grid
 		{
-			if (FloatRect(x - 6, y - 6, 12, 12).intersects(block5[i].getGlobalBounds()) && i < 20) //check each block for collision
+			if (FloatRect(x, y, 12, 12).intersects(block5[i].getGlobalBounds()) && i < 20) //check each block for collision
 			{
 				sound1.play();
 				score += 5;
 				block5[i].setPosition(-100, 0);
 				dx = -dx; //reflection
 			}
-			else if (FloatRect(x - 6, y - 6, 12, 12).intersects(block4[i].getGlobalBounds()) && i < 40) //check each block for collision
+			else if (FloatRect(x, y, 12, 12).intersects(block4[i].getGlobalBounds()) && i < 40) //check each block for collision
 			{
 				sound1.play();
 				score += 4;
 				block4[i].setPosition(-100, 0);
 				dx = -dx; //reflection
 			}
-			else if (FloatRect(x - 6, y - 6, 12, 12).intersects(block3[i].getGlobalBounds()) && i < 60) //check each block for collision
+			else if (FloatRect(x, y, 12, 12).intersects(block3[i].getGlobalBounds()) && i < 60) //check each block for collision
 			{
 				sound1.play();
 				score += 3;
 				block3[i].setPosition(-100, 0);
 				dx = -dx; //reflection
 			}
-			else if (FloatRect(x - 6, y - 6, 12, 12).intersects(block2[i].getGlobalBounds()) && i < 80) //check each block for collision
+			else if (FloatRect(x, y, 12, 12).intersects(block2[i].getGlobalBounds()) && i < 80) //check each block for collision
 			{
 				sound1.play();
 				score += 2;
 				block2[i].setPosition(-100, 0);
 				dx = -dx; //reflection
 			}
-			else if (FloatRect(x - 6, y - 6, 12, 12).intersects(block1[i].getGlobalBounds()) && i < 100) //check each block for collision
+			else if (FloatRect(x, y, 12, 12).intersects(block1[i].getGlobalBounds()) && i < 100) //check each block for collision
 			{
 				sound1.play();
 				score++;
@@ -202,35 +202,35 @@ reset: //reset label to reset the game
 		y += dy;
 		for (int i = 0; i < n; i++) //n is from displaying the block grid
 		{
-			if (FloatRect(x - 6, y - 6, 12, 12).intersects(block5[i].getGlobalBounds()) && i < 20) //check each block for collision
+			if (FloatRect(x, y, 12, 12).intersects(block5[i].getGlobalBounds()) && i < 20) //check each block for collision
 			{
 				sound1.play();
 				score += 5;
 				block5[i].setPosition(-100, 0);
 				dy = -dy; //reflection
 			}
-			else if (FloatRect(x - 6, y - 6, 12, 12).intersects(block4[i].getGlobalBounds()) && i < 40) //check each block for collision
+			else if (FloatRect(x, y, 12, 12).intersects(block4[i].getGlobalBounds()) && i < 40) //check each block for collision
 			{
 				sound1.play();
 				score += 4;
 				block4[i].setPosition(-100, 0);
 				dy = -dy; //reflection
 			}
-			else if (FloatRect(x - 6, y - 6, 12, 12).intersects(block3[i].getGlobalBounds()) && i < 60) //check each block for collision
+			else if (FloatRect(x, y, 12, 12).intersects(block3[i].getGlobalBounds()) && i < 60) //check each block for collision
 			{
 				sound1.play();
 				score += 3;
 				block3[i].setPosition(-100, 0);
 				dy = -dy; //reflection
 			}
-			else if (FloatRect(x - 6, y - 6, 12, 12).intersects(block2[i].getGlobalBounds()) && i < 80) //check each block for collision
+			else if (FloatRect(x, y, 12, 12).intersects(block2[i].getGlobalBounds()) && i < 80) //check each block for collision
 			{
 				sound1.play();
 				score += 2;
 				block2[i].setPosition(-100, 0);
 				dy = -dy; //reflection
 			}
-			else if (FloatRect(x - 6, y - 6, 12, 12).intersects(block1[i].getGlobalBounds()) && i < 100) //check each block for collision
+			else if (FloatRect(x, y, 12, 12).intersects(block1[i].getGlobalBounds()) && i < 100) //check each block for collision
 			{
 				sound1.play();
 				score++;
@@ -239,7 +239,7 @@ reset: //reset label to reset the game
 			}
 		}
 
-		if (x < 0 || x > 520)
+		if (x < 0 || x > 504)
 		{
 			sound3.play();
 			dx = -dx; //bouncing
