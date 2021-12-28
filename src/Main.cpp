@@ -25,7 +25,7 @@ reset: //reset label to reset the game
 	RenderWindow app(VideoMode(520, 470), "Arkanoid!"); //creates app and within it creates video mode window
 	app.setFramerateLimit(60);							//sets fps using sleep function of sf namespace, which is dependent on OS
 
-	Texture t1, t2, t3, t4, t5, t6, t7, t8; //images to be used, live on graphics card
+	Texture t1, t2, t3, t4, t5, t6, t7, t8, t9, t10; //images to be used, live on graphics card
 	t1.loadFromFile("images/block01.png");
 	t2.loadFromFile("images/block02.png");
 	t3.loadFromFile("images/block03.png");
@@ -34,10 +34,12 @@ reset: //reset label to reset the game
 	t6.loadFromFile("images/background2.jpg");
 	t7.loadFromFile("images/ball.png");
 	t8.loadFromFile("images/paddle.png");
+	t9.loadFromFile("images/gameOver.jpg");
+	t10.loadFromFile("images/heart.png");
 
-	Sprite sBackground(t6), sBall(t7), sPaddle(t8); //textures are applied to these, these are game objects
-	sPaddle.setPosition(215, 460);					//set paddle position
-	Sprite healthbar[11];							//health bar at the top
+	Sprite sBackground(t6), sBall(t7), sPaddle(t8), sGameOver(t9); //textures are applied to these, these are game objects
+	sPaddle.setPosition(215, 460);								   //set paddle position
+	Sprite healthbar[11];										   //health bar at the top
 
 	Sprite block1[200], block2[200], block3[200], block4[200], block5[200]; //array of blocks (200 can be ignored as array declaration needs a number)
 
@@ -136,7 +138,7 @@ reset: //reset label to reset the game
 
 	for (int i = 0; i < life; i++) //sprite to display the life indicator at the top-right
 	{
-		healthbar[i].setTexture(t7);
+		healthbar[i].setTexture(t10);
 		healthbar[i].setPosition(500 - (i * 17), 10);
 	}
 
