@@ -1,7 +1,7 @@
 // CGMT Project: Araknoid Game
 //Team: -
-//Rishik, S.No. 10, Enrollment No. 12315002720, CSE 3
-//Samarth Gupta, S.No. 16, Enrollment No. 12315002720, CSE 3
+//Rishik Gupta, S.No. 10, Enrollment No. 11615002720, CSE 3
+//Samarth Gupta, S.No. 16, Enrollment No. 12215002720, CSE 3
 //Tanishk Saxena, S.No. 30, Enrollment No. 13615002720, CSE 3
 
 #include <SFML/Audio.hpp>
@@ -25,7 +25,7 @@ reset: //reset label to reset the game
 	RenderWindow app(VideoMode(520, 470), "Arkanoid!"); //creates app and within it creates video mode window
 	app.setFramerateLimit(60);							//sets fps using sleep function of sf namespace, which is dependent on OS
 
-	Texture t1, t2, t3, t4, t5, t6, t7, t8, t9; //images to be used, live on graphics card
+	Texture t1, t2, t3, t4, t5, t6, t7, t8, t9, t10; //images to be used, live on graphics card
 	t1.loadFromFile("images/block01.png");
 	t2.loadFromFile("images/block02.png");
 	t3.loadFromFile("images/block03.png");
@@ -35,10 +35,11 @@ reset: //reset label to reset the game
 	t7.loadFromFile("images/ball.png");
 	t8.loadFromFile("images/paddle.png");
 	t9.loadFromFile("images/heart.png");
+	t10.loadFromFile("images/gameOver.jpg");
 
-	Sprite sBackground(t6), sBall(t7), sPaddle(t8); //textures are applied to these, these are game objects
-	sPaddle.setPosition(211, 460);					//set paddle position
-	Sprite healthbar[11];							//health bar at the top
+	Sprite sBackground(t6), sBall(t7), sPaddle(t8), sGameOver(t10); //textures are applied to these, these are game objects
+	sPaddle.setPosition(211, 460);									//set paddle position
+	Sprite healthbar[5];											//health bar at the top
 
 	Sprite block1[200], block2[200], block3[200], block4[200], block5[200]; //array of blocks (200 can be ignored as array declaration needs a number)
 
@@ -337,13 +338,18 @@ reset: //reset label to reset the game
 
 		if (life < 1 || score == 700)
 		{
-			break; //breaks out of the while loop
+			app.clear();
+			app.draw(sGameOver);
+			app.display();
+			char retry;								  //retry variable
+			printf("Do you wanna go again? (y/n)  "); //asking for a re-run
+			scanf("%c", &retry);
+			if (retry == 'y')
+				goto reset; //follows the label of reset if asked to retry, otherwise returns.
+			else
+				break; //breaks out of the while loop
 		}
 	}
-	char retry;								  //retry variable
-	printf("Do you wanna go again? (y/n)  "); //asking for a re-run
-	scanf("%c", &retry);
-	if (retry == 'y')
-		goto reset; //follows the label of reset if asked to retry, otherwise returns.
+
 	return 0;
 }
