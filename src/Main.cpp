@@ -1,3 +1,9 @@
+// CGMT Project: Araknoid Game
+//Team: -
+//Rishik, S.No. 10, Enrollment No. 12315002720, CSE 3
+//Samarth Gupta, S.No. 16, Enrollment No. 12315002720, CSE 3
+//Tanishk Saxena, S.No. 30, Enrollment No. 13615002720, CSE 3
+
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <stdio.h>
