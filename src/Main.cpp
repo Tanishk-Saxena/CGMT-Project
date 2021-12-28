@@ -30,9 +30,9 @@ reset: //reset label to reset the game
 	t8.loadFromFile("images/paddle.png");
 	t9.loadFromFile("images/heart.png");
 
-	Sprite sBackground(t6), sBall(t7), sPaddle(t8), sGameOver(t9); //textures are applied to these, these are game objects
-	sPaddle.setPosition(211, 460);								   //set paddle position
-	Sprite healthbar[11];										   //health bar at the top
+	Sprite sBackground(t6), sBall(t7), sPaddle(t8); //textures are applied to these, these are game objects
+	sPaddle.setPosition(211, 460);					//set paddle position
+	Sprite healthbar[11];							//health bar at the top
 
 	Sprite block1[200], block2[200], block3[200], block4[200], block5[200]; //array of blocks (200 can be ignored as array declaration needs a number)
 
