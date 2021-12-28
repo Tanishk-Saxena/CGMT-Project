@@ -6,15 +6,6 @@ using namespace sf;
 
 //To run ctrl + Shift + B, then select build and run: debug
 
-//TODO:
-//1. Background music--------done
-//2. Background Image--------done
-//3. Score Counter at corner--------score is being updated but isn't being displayed yet
-//4. Game Over Screen (Score, Restart)--------restart and score functionality has been added but a seperate screen for them is yet to be decided
-//5. Life Counter--------done
-//6. Lose one life on border touch--------done
-//7. Extra: Color Changing blocks--------done
-
 int main()
 {
 
@@ -28,7 +19,7 @@ reset: //reset label to reset the game
 	RenderWindow app(VideoMode(520, 470), "Arkanoid!"); //creates app and within it creates video mode window
 	app.setFramerateLimit(60);							//sets fps using sleep function of sf namespace, which is dependent on OS
 
-	Texture t1, t2, t3, t4, t5, t6, t7, t8, t9, t10; //images to be used, live on graphics card
+	Texture t1, t2, t3, t4, t5, t6, t7, t8, t9; //images to be used, live on graphics card
 	t1.loadFromFile("images/block01.png");
 	t2.loadFromFile("images/block02.png");
 	t3.loadFromFile("images/block03.png");
@@ -37,11 +28,10 @@ reset: //reset label to reset the game
 	t6.loadFromFile("images/background2.jpg");
 	t7.loadFromFile("images/ball.png");
 	t8.loadFromFile("images/paddle.png");
-	t9.loadFromFile("images/gameOver.jpg");
-	t10.loadFromFile("images/heart.png");
+	t9.loadFromFile("images/heart.png");
 
 	Sprite sBackground(t6), sBall(t7), sPaddle(t8), sGameOver(t9); //textures are applied to these, these are game objects
-	sPaddle.setPosition(215, 460);								   //set paddle position
+	sPaddle.setPosition(211, 460);								   //set paddle position
 	Sprite healthbar[11];										   //health bar at the top
 
 	Sprite block1[200], block2[200], block3[200], block4[200], block5[200]; //array of blocks (200 can be ignored as array declaration needs a number)
@@ -141,12 +131,12 @@ reset: //reset label to reset the game
 
 	for (int i = 0; i < life; i++) //sprite to display the life indicator at the top-right
 	{
-		healthbar[i].setTexture(t10);
+		healthbar[i].setTexture(t9);
 		healthbar[i].setPosition(500 - (i * 17), 10);
 	}
 
 	float dx = 0, dy = 2;	//ball position increment
-	float x = 254, y = 300; //ball position
+	float x = 250, y = 300; //ball position
 
 	bgm.play(); //play bgm
 
@@ -255,7 +245,7 @@ reset: //reset label to reset the game
 				sound4.play(); //the sound of losing a life plays only when there is atleast a life left after losing one
 
 			life--;
-			x = 260, y = 300; //resets the ball
+			x = 250, y = 300; //resets the ball
 			dx = 0, dy = 2;
 		}
 
@@ -340,7 +330,9 @@ reset: //reset label to reset the game
 		app.display(); //display what has been rendered for the current frame in the game window
 
 		if (life < 1 || score == 700)
+		{
 			break; //breaks out of the while loop
+		}
 	}
 	char retry;								  //retry variable
 	printf("Do you wanna go again? (y/n)  "); //asking for a re-run
