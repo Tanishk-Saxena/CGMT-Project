@@ -20,6 +20,9 @@ int main()
 
 reset: //reset label to reset the game
 
+	char waste;
+	scanf("%c", &waste);
+
 	srand(time(0)); //to seed the rand() function with a random variable depending on system time to avoid predicatbility
 
 	RenderWindow app(VideoMode(520, 470), "Arkanoid!"); //creates app and within it creates video mode window
@@ -261,7 +264,6 @@ reset: //reset label to reset the game
 			bgm.stop();
 			sound5.play(); //sound of game over is played instead of sound of losing a life
 			printf("Game Over.\nYour Score: %d\n", score);
-			break; //breaks out of the while loop
 		}
 
 		if (score == 700) //if game is won, that is, maximum score of 700 is reached, then victory song is played and score is displayed
@@ -269,7 +271,6 @@ reset: //reset label to reset the game
 			bgm.stop();
 			sound6.play();
 			printf("You have won!\nYour Score: %d\n", score);
-			break; //breaks out of the while loop
 		}
 
 		int pdx = 0, bdx = dx; //pdx is for paddle's displacement, bdx is for ball's displacement because of paddle
@@ -283,7 +284,8 @@ reset: //reset label to reset the game
 			pdx = -7;
 			bdx = pdx + 1; //bdx is in the same direction, but one less in magnitude
 		}
-		sPaddle.move(pdx, 0); //to move paddle left or right as per pdx (paddle dx)
+		if (sPaddle.getPosition().x + pdx >= 0 && sPaddle.getPosition().x + pdx <= 430)
+			sPaddle.move(pdx, 0); //to move paddle left or right as per pdx (paddle dx)
 
 		if (FloatRect(x, y, 12, 12).intersects(sPaddle.getGlobalBounds()))
 		{
@@ -336,6 +338,9 @@ reset: //reset label to reset the game
 		}
 
 		app.display(); //display what has been rendered for the current frame in the game window
+
+		if (life < 1 || score == 700)
+			break; //breaks out of the while loop
 	}
 	char retry;								  //retry variable
 	printf("Do you wanna go again? (y/n)  "); //asking for a re-run
